@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="fonts.useso.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"kenanthack.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="git commit opreation">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git_rewrite_commit_log">
+<meta property="og:url" content="http://kenanthack.github.io/articles/d625c286/">
+<meta property="og:site_name" content="KeNan&#39;s Blog">
+<meta property="og:description" content="git commit opreation">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-07-02T05:28:18.000Z">
+<meta property="article:modified_time" content="2023-05-12T07:25:00.971Z">
+<meta property="article:author" content="KeNan">
+<meta property="article:tag" content="Cyber Security">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://kenanthack.github.io/articles/d625c286/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>git_rewrite_commit_log | KeNan's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">KeNan's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">9</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">20</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://kenanthack.github.io/articles/d625c286/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.jpeg">
+      <meta itemprop="name" content="KeNan">
+      <meta itemprop="description" content="A Blog to record some tips and opearations">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="KeNan's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          git_rewrite_commit_log
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-02 13:28:18" itemprop="dateCreated datePublished" datetime="2022-07-02T13:28:18+08:00">2022-07-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-05-12 15:25:00" itemprop="dateModified" datetime="2023-05-12T15:25:00+08:00">2023-05-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index"><span itemprop="name">git</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="118342a81903555c4272a621f926511b30faa135a10fcf049930857102248a6d">4cbd35fef94c8eafe014d19e9c29560a6ea80eb337d2fff26324111bea0bad88cebfcbc5924bd5e3ed15344a03736a3e18c44dc578d9fcf258d2cee4b12a604dd72b3672d1ccb31017687098e54656f608e08c00bbbd5e0accc578a40b01d2ca8b2a4c86b1eae00f8a0a75a6f9e1c0c88f0e6dd09544284b5338a26a81e37655fc4127fba02e6b656fa823787d230c10d3791f7c6f9f9e10ffe54c24183a883619c0fcdde7f97ae97f7df6b88f7c67185e7ee7d1e5bddeaeec038fe257a95296bcad1608def25c97751464b2f034cb66f2210da10ba38c6966471e45ecfb6239a5df9074a61230b320c07bf2e23553331900af98630e0ec5c13f49633b9449469f991b009ff27faef6ad1d8fdd40024b3c590ab6ae1bac5b5e4676d212280130762f06234ba6ddbe6cdaeb9c38b339cf61ffa04957bed5584a0c6be1631886320acc9c4dd48209320c9de9235d674aa11c1bc784095bb08b967b7cb71f75f2bd73e8caa17cc5e0df5e58520245a79cccd5bedec4e3363d5100a237c1ffe9a19460fb4a47e8c53ecfba12ff442927206def391169ecccc75cff1817758d64b31dbfb9b67d574eb9e4ea45bcf780f6721c8679b04c232fc0ced574d9218d39fbe257ecec3d5db144647df23b6d231f1a764c54fc7401f1b4d9efaaef3ff1b00876ff2b7f2ab9c2c60dfeabd2e7c0aaf514e62174090f935a83f646d09039a7c5ebf33e74d1a8d1fe14a17dccca59493350b3fb818c9b885b847fce4ffc084047b77c39060c8a237394f8679e148303fec490f4fa3215dc952139a67ea86dc63cf2ddbec38c4f0e2427c34d14801e23a3e0bc597d004f952450c38d5f419bb04de69aa1a9d5a8e731175067d2db36bb4110f985c95fdb71118cf28e869c89292faff679b435c767b1a4655fb4a66bf5376f5d422aeb02e9df1dc990c66c4c7a24d4ec8ba264f1a9d4cb513e495b0e025446121eff70091a8b9017ffff20268a0015eb09d6bb72255b8ff9fe5d698f0ec7b1e2efbeb5c862f4e796693b09c56f8815c2c64613c0f74a88c133509aaf32670684d0c19e2e1b54081df2c539ac75c06b8d394828dc21721a27e07729fc1fed17f38b0cbf92ce7e695dbba9ef48dff9f7244c9f493ef4605ebd52462e649b78885db5daa5b51cce0be6c7ae73fc126ef3688d1ea0ea29e787a4e8b130299787da98d36fd232466978b51f27275a39d69a4bac6c7fa8dfeea756128f2a50aa5e76f3f7cb28a9795852c6d1b64659120ddcab672a8976efc1c8588fe0221a15626bd0ea8f527c9e97bbcb6a481139eead665391b471e811106ac2d94ddfd1116f59329f91716e6223f5a812c6ca539a21a710344217ada8d4ce655ee0741362b931625c49b6ab347e4e69f2e17c379068bb5429e2f7ea1e62079d509e19b03e62f2c9d3287074a546a2016094111862865705ae1033b805107704971a163fe620c96ce18f0f85a8fa3d53834a3aeed2e8ae7e47c226332b72c66a16e955b51d0e147e6a3947b345b1af429ce5fb1590f3ef7956274a4f9d6278bb7e2ca0f815ee751a56fc6268a96a0e2b54e12058c930214528c61932dbf1f6731547cc61c76db3a8bbe09f0d832fc48798536685b24e4d899048e08a3e3e7f42349239b2e85c3c0b85dd8c9b04e980f14434d6609f5afdb63b5ebe893b790c71f04729fed501994564a44f68618612a774eac1cc2b8778b6b06ef10a7e667d7df92db8db232099c0078fb33d1bf7b83de86573886ee0f681f75d773ce716218d02905db6f6257f6e5a4343728aba2d6040d7533fbb1a1b72c819542e977ac9f5b88e10989cb110983ecd5ebb5e6c4ce824133ae0e1164eb11f321d16d6f69703bef4a4c4a17e8f13fe523310d18bbcf5712c5b2430b24b3226864c72efebab0d84c298b57235adc96cd76ebf8b4f18af1b578c5275eeba8bb79ea4d4293626ecbf57b43ae3006cd6a2a805e999f7fccdaaca28d8c71dbdb61a98277641e69636a1e6bec1a0fd1dc77052e2013821c09109ca5af2b5faf249135b5de397bc0cd7edcd240492177a8d591c53ba345e94ceea4b2172e939aa249594d0681b022594027be3080ad5f3471679abaeb8772218cf6e12f8c0eb304ecadcf2c16f201b4a9b6f18563dc9044773b63a67d1e9fad544b90f35f909778db9e547ffbb113a9b2de02af9f33ed4eabd0a3f1d7df0f5aa80f9bed06f60c6b288f59117343326b4ff66ecfe5b6e56fb8b94b624a1552e52e368f850d884a2140cc163220cf13ed10625ae5b3ea150ec17a7bcf62634d32f926ac2a93f8d176d0dab005b1cea1a21d845ccdbdefe9e5c7e8d18cb98fb505dd7e27bb7fca5a65915646e3cb00dabe5b43ebbfe36f93f9ef9c46efa2b209f3367f96768f4d504f45190d806122b703791d3938b113621a6a25bd93137c42becfc46ad5ac820081eefee74a294c2247aa63363835e7553d484906c9efaf6e513a6d1f9eafa767c86d9716838e362ca08338b2dab633e4f7ef3f2845cf9b6bd74d9ccd1e28ab549afed0c601d5e13a3bb63155dfd36b5e551b8c834096c713ff34214e9c4b391614daea0a7c66276271709e15d5bb4672bf9d5999645363b40be1a9c3a50e7c538f082bfa527bcaaa03f6801a7e4f7f6407ff02cbf577ad14a0ec6a7aa9a46199271551ab2f1934dd24dd3cb0e3e6a15ad58f982331fec38c2a0db6d403bf5b46452f8efe98406cb1edc7741c6df4e079aa657d4ef8792968f80e5403e1a55578db6979386f18f6c57dcf84e805a7faf7f85a1f51cbac2a98cc341d2c8725f9418</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">input password to look article</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/articles/54b4b4b1/" rel="prev" title="win_docker">
+      <i class="fa fa-chevron-left"></i> win_docker
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/articles/1d16233a/" rel="next" title="CVE-2022-28346">
+      CVE-2022-28346 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KeNan"
+      src="/images/1.jpeg">
+  <p class="site-author-name" itemprop="name">KeNan</p>
+  <div class="site-description" itemprop="description">A Blog to record some tips and opearations</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">KeNan</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>-->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

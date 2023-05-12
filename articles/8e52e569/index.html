@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="fonts.useso.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"kenanthack.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="域控时间同步设置方法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="域控时间同步设置">
+<meta property="og:url" content="http://kenanthack.github.io/articles/8e52e569/">
+<meta property="og:site_name" content="KeNan&#39;s Blog">
+<meta property="og:description" content="域控时间同步设置方法">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-07-12T05:14:22.000Z">
+<meta property="article:modified_time" content="2023-05-12T07:25:01.088Z">
+<meta property="article:author" content="KeNan">
+<meta property="article:tag" content="域渗透">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://kenanthack.github.io/articles/8e52e569/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>域控时间同步设置 | KeNan's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">KeNan's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">9</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">20</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://kenanthack.github.io/articles/8e52e569/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.jpeg">
+      <meta itemprop="name" content="KeNan">
+      <meta itemprop="description" content="A Blog to record some tips and opearations">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="KeNan's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          域控时间同步设置
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-12 13:14:22" itemprop="dateCreated datePublished" datetime="2022-07-12T13:14:22+08:00">2022-07-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-05-12 15:25:01" itemprop="dateModified" datetime="2023-05-12T15:25:01+08:00">2023-05-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%B6%E5%9C%BA%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" itemprop="url" rel="index"><span itemprop="name">靶场环境搭建</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="fb45281b9e486a3a03461dc8b6cf77338b96a01ece2a9d58a306d166cf008916">4cbd35fef94c8eafe014d19e9c29560a6ea80eb337d2fff26324111bea0bad8896dcf09b09eece3e25b25f010177c27ff45ba1849a0c1049842b24e0df43c6320e531a6c8bfc9c6ba100710442a071d7bf3f45412c123b45d076f8e86dacd6a666e75fdd847c3ec09b3e279babd113833b0cf6c6b2a636735ee4ed87ff085a3bc383f0c50b5631a79c63e80f647843ea50727aa854693a97c3ec706cd3af319a345e14c064e068562c90e359cc785e38d657f7aa91ef74d9f6827653c30b563a6912606f99770dbfd0315c15b892be7712519c1ad489441146647ef0d2f4fcfd855ca4f9371526b67871888e80839944ab77561ec2e3b333c409a96179d968f281edded91dcc70b00436132ec4c8c9c642e330d5b191550816f3cd5ce6e165b031b40ded4cb1dd0fe78e3d1ad5a5467aa20dbabd31a8dfeb692206a196467b07007b86a5d5766b36ad333ea08dc7309ae57bb60451933b218ab48e52c60fd192891a530d326751cfc1b751b2f557d0a76fe3c58d14a123e94f327423c75ef3e551c3a174c1be1f1223fa2cf12b3ca01e04aa20b459d089a04f541ad240ecbdaa891960e49c351846aa75f1a4bac8b65e163d17b5431a91fb1f0c227263dd659333b88677f5a480575dc3ea3e95c9397d35393b7bf8f8f03a85f4794609b03e6c89634ebf4a27dbb2f7af366943fa63fb6ddde57024305c0aef8d2f665895ebd89f93baf9ebcac57aac49c34db3740d57a3fa6fb86d3ab34d66bf4327ddcc909624ab3b2243d2074a16579eed7b1bd40660ead32e33e8a6e74fe044f89cd0545c2a227a8ebc223a7d051b725e2967c0962fc9f77f7262e77ec17c7239aaa0c06b953b90feb52d9949e69a3571a664bdad0798f34b745c29aa7e5815f1dc4bd2f9cbce9bbafbd629ad16f9c4988a22bb035e76d13aec2bdbb8eb3f8840da2027d0ed3e620cc0c432e0c9ef0893bd92dac9b452150c15ff4614fb56156a1079c5dd385d51326e76f97322886988762a638ccc637c96d370da806e47cb990b0d55c65749090075dcbf8f19d22fc37a4c747f9a9427293a8843dbab76b7d21bf14d2f162ae3ad02eec0bd035eea4a8537783336970a195f41658f0d08a39bf65177c32d6ff79a512788565a9034b7b8a0aec85879688de109f18160f7e6ccc63eebafca69171ca7b90c4819553bd986168abda99df9777009c28f388fd7471e120084b0d2ae46bc92009f20b002f97a828c7c63971a093d16b839d8797ce41ad096128d1c4a897e0eba502db88707549455a3964a2d8a3ec886637497c2ce51f72e616b89e210ba2964243c2a4556641aac84c9bc5f64ace32fae5c87f71aac6c37d293abe1c8fac1e952c4810d38d38617b491817f2ae0158b023b1f0683b1a2b09f230b8a612123968f50b46be0d5849057f3a5fdb7eb560ecd5548acdf10856cffb80fef062332b24401564527768f9472c9fb9eaa76c2f085671a4e8ffe0bc1133b235491dd6ed382f6187213d835c3a20b6e2a9bd9b89650729763a50d074b008fe0ada25b9709bf974dd681e348523f4400cfc62b77e744f28ee35c6df3a7f87f974829e738e29c7a046fa73f566e1d9f0160f2436d4e059d1b52873cc26d34d31999aada4120f391579db9dfbf4869dddaf4f3f26575bcc44411c518a5bc2e813770608a9e281993af7cbcf5f667bae6fd8972b15fa1feacf2a237dd84e1fb73c0f2823c7b9b1f05d3bcec7628b9246486794774a03413aeef9c0b8c0176c5bc43bf2be826b2c8ad3ec428ef630fda226e4844a9a148351315b5ef3ab90257f4271a7184f4a6f6b634245a568c3785e64135d2244ed489039aee0094c6cc073ef4c2b005aeb0623139dcedef0ab3b43f40b4f0974194686934ed83e0e2da6838d35efd239550219b233219c287f439bf27f7a11ca8212249c2897d3fa25fbb55a2237a8e8017616c794e797ee2c62864cdd87ec10a80adc588c9c1d60d17c34f0ec6565fc5dfbd23f5d85d0b24bc8dec6d12a498592328f2758227dbacc4a28eb678417b6dd23a7431d7a7eb56624d0291a9c58053b39185732bc405400321dc6c01f7796e3ad95094489205b5acc0e5f88f24635a84c40d0ff70830d93895bdb9c2322e1edb6f9130996fba89dac786faa0dcd9807f39f5157627a6631a9886b3c801036455a8af237adbafec313656d878980ef97a2ea460acb7bff77200a6afe99c2b34d9c6b457491f7480f6e958e75e75aaacb7bbf2b0175f45ff17dcb1aa2093ad1ab3358b469aa1d436f223e29167efb9baad4cd6bbd4a492e97020b797203316546cf7320e6e198294f9f7203d2a970c64a7f3a96ae97aa07d53e6f1a7875a55950ffc681f537889682e6c0ff2d32074f34e7c38de2ccf7149353b1ef3fb615f2da53f8ae080f5cf17b403dcf0f91f88334af35e674999a5e34c322b91aff721db2c4f8fcf760d6436fb96a321f273e258055470d1b8ef3413626a70a2b76cef5a6ff3256793cac30f6b7c02aafcf4adf5bd1033e070148dce5bbad6bcb5c5b4525be8f3dee9ae77cecc5c7b66398a2835176956e6593126a8280cef6ef1166355a94196da98d1afd46aa133a2915efb6b10aa8e2aa3d4fb3b6c2201c33993e915c0b0efc6a7b530545606f70cb4e1bb5764df377e969596156c4c4894b016681bca026c79468a0535be493a65070e5f9c59c9962cbb0e97a7fc90388636e85a35b69f3f01029f8782d9077933954aba9f12198c51ed1a4853a884e913aa1bb34bd81de2201c9754de951a9d8f5dbb7c182d250868559f8225111b866cda68cad26099cd40d34ec3c1b5fed5d09cfc1e90e0ea8f945b37a6b430ed5706622fb3b5298bdeb4cd45d2880f3d643ea6a039bfc565c9c379d3995624b8aa26f95a147212495a4c50eaa87a3d4e1c86cb4f3c5fff50df4492e0cf1fdd646400a397992ce46cfaccf2fd2c9eea931f4b5cde3ff379ba8d3e65b116b4648a3d1740cf78da660afaf0d2444cec89ec4ec93365e061d991b29afec06bd48fbaf967ed0d6ea53b90f74623a1a4733a88b6b1f32f9e371faa3534db3181fc0d7f6f786442fae2018ddb59278017294a23158c02faeb31698c20efd65cbc7b6f99483b17bc88d90a2917fde2b825970bc35303dcc024908d734f92de21536e73898bcaf1d0c13a8090e1e512d5c06ff49d4655b8b771e0629a0be61ec898c52a4a40f3476248c41ff6978e89e0ff6ed6874e30c11caaa8c0551ed008ec62d85f57e9b3ebebf7534f96736a82ad0b0ba516fa29c5e482eea14f149532b50741ba13c44f971aaeb2ccb42584556315b7c65df75fbb88e51409004070fb1e4ea6eccacc91674d48552ebd2111ad5fa25801ea91beaa0db640c8aeaffbf8efd0773f7fa0d6fb4a3793e8afaced3587ebe13c2a</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">input password to look article</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E5%9F%9F%E6%B8%97%E9%80%8F/" rel="tag"><i class="fa fa-tag"></i> 域渗透</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/articles/d66e82d6/" rel="prev" title="CVE-2022-26923">
+      <i class="fa fa-chevron-left"></i> CVE-2022-26923
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/articles/17ac3533/" rel="next" title="CVE-2021-42287&42278">
+      CVE-2021-42287&42278 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KeNan"
+      src="/images/1.jpeg">
+  <p class="site-author-name" itemprop="name">KeNan</p>
+  <div class="site-description" itemprop="description">A Blog to record some tips and opearations</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">KeNan</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>-->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

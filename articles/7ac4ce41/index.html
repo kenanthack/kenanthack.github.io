@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="fonts.useso.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"kenanthack.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="an article to record sdl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SDL">
+<meta property="og:url" content="http://kenanthack.github.io/articles/7ac4ce41/">
+<meta property="og:site_name" content="KeNan&#39;s Blog">
+<meta property="og:description" content="an article to record sdl">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-07-06T02:26:02.000Z">
+<meta property="article:modified_time" content="2023-05-12T07:25:00.950Z">
+<meta property="article:author" content="KeNan">
+<meta property="article:tag" content="Cyber Security">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://kenanthack.github.io/articles/7ac4ce41/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>SDL | KeNan's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">KeNan's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">9</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">20</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://kenanthack.github.io/articles/7ac4ce41/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.jpeg">
+      <meta itemprop="name" content="KeNan">
+      <meta itemprop="description" content="A Blog to record some tips and opearations">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="KeNan's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SDL
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-06 10:26:02" itemprop="dateCreated datePublished" datetime="2022-07-06T10:26:02+08:00">2022-07-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-05-12 15:25:00" itemprop="dateModified" datetime="2023-05-12T15:25:00+08:00">2023-05-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/sdl/" itemprop="url" rel="index"><span itemprop="name">sdl</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="05e4b6b73e504c3a59ba4f0e61b9c1350c489502363dd87bcaab3018fe871c4a">4cbd35fef94c8eafe014d19e9c29560a6ea80eb337d2fff26324111bea0bad880c466c45e78f28150aca10f6c58aa0cc0c88c06bcbb9aa1d6dc9b2bd90d310fcc667f726d12c9377faaeb44fa2e9ae7e0b48dff2d73c0a5c685a105b7f9cbdabbdd81a69795d9615e37b0b22f49773d02d068a804e96aecd20bb5b62cb052ead88e96a2ace2420ac1f06479518f9f88ae0bc55ff5bd0cfae6db7c0cb7a804529fb24827fd51dddb98a8179899c7bd72a3da08be60f85d97a951e431a3c2b5a1749e9f39e6145dac6a8ea71f29324b50dc3f1a767a8c167582d812478ead3f3e4c54e3ca468dbd18f82e1b65301ab8607590941b173d67287e37e841f7d00ac174137af13525428a188bcd51dedfc9ee9565d2cef6e9d0731c13b28da14ba25be88c960697a0bc3adadcad386338d4863c58f7b7e85e2de956887dce187698fc78ec19aaddcaa297fad2eb2b7e85f77b00cfaa10f1a4cab970dcd17318ad5c3d209a0e5321926f8f9ebd59e114fe705b92ae298e1351f6007ade877b2b28008e344ee6fba79335160eb87fbd22f9c94efbdbca931ce9ea1061534b28f5280640623f08be9bca045fff6b336666acc74e598a2e866ba8a945fe0ad5866dfe5727ce6c1e9f4b18e522e8b1724c0e028bf2d825b9c84dd6571b262b4672444c822d9e4c1d7c8889ece05bc2069a4fd8482cdfba05caea046b59567efc2ca3fc50d3c34d91229e755441d053a00a8ea693f2d09aa76a7733a0c752209413f353ffbcea39680ee8b81ba20fbd46b5bb20d7d5ee994fdc4b256d434ff86fd2852ea704ab72b710738323af435347df8922cda40931dacbc3be7a18118ee34a9593bbec046aa37d03e9398ba94e730fd00dc14e1a6526413b82a9057e1befafb8b228589845305ca640031baf8a94aa49d8edd05df0af9ea811f8b9330da582ddda36ea2268060cd19d1b173001349d3d6f8eb8ad9b6b4eec0d613713f0771e443ea2226991f379691ead73e9d471070ee20b7ea43da9188fe5c7d6d89c8613953a2e10298bb26922025ad167a4b93d4d601a5f72ec173e1fcb79a5aac5c5f75bf1f388d692fd7419f45b150369232d52125a24997017804dae87cecdecc29e4dbd9114763517180c83c747f4132b5b920f2ba55a317d54696f3446f3238815ce18052585beef13aee957c7f148003ce38386f40c7c36ef17e8da10c620e140ad72949415ddc594c758c0740b5d57fc6e3a7e21c5ff84aa3e5c0e133481eac8329da435f05b16cc05c6407acec19a3a77eb590186209533f028fa0922cf338a429a261acf47eda50f28c85a8066b30ecf3ca91a8bb814db932bacb4af293e2381e58f4d59ed227d0263d7552db37eb79995f613457afb8441e1cb96b51e8c4b10a7d84235521477986d4e0ba2751c4fe8c3581545295994294e1b5696829d79e4c7af93d27199cfd71821cc8c479acd93b5fa58e28ac8f832d56fa00853497c3fb5fecc063ef7bf6bb061760d74ed8424e9c00343bc13491491b475368bc93f95e13d77a12e47530ed3dd0d370c542897907669dd445f79c54b6f9ed980f7b5f9ed5d6e4ff502c8dcf69c9421722ef8f31ce78634680ce0c36ea5aeeece843a738dcad89e0ef873f063ca4f6b9c3e833772ab927495a29aecf78893014432d1a79b25ce07694a0f48d88816158033295dcd534eef723f411eb46b70624d1c86745cba064832f38332b32e7879c1703e8ed8a588b67ba67aca47686f3eab6177942b16a4e5bd54a1084f142fd767e670cd7914fae475a6ad972f9f51392272156cb5144956374f67edf6106dad6bab3893f6ce486cc47c58565d4022aefe3356ec257721ab22297038cb62b8f6328ffbc742f056f4da41e67126876e009f25bb4da797158ca2d338196e2bae02f3f08c9d5344ec9f12219e2edc1111210e5cbd375963ed2ece6fde97741fe8b7e7cd866a97b2a99da096a9e595865b2e54d69adf64dacc295094b7fc3da4b0440dc597b6bebf9205baa612216811fa987661f16aa8c2cfc8b8ee4b5fe264261ed3e770aaf9fcaa103b45864d62bbaa475234b22dacb04ee453e72a847d2d99ffe2a1cc28655c98d7e153ac9046c87b38e7e6ba765dcf0e90512ade681f9d2bee2a05743750957071d5fd6f176148cd2e93af7e5ea3061405c24e7d9377ce1caabf313bfe5f46223d9e5bb7a99f1f24a577a12dedc68f2699890c56f03866ae7cad37f6e207deaadb0126cafa0ac30ed8d3afb0b7dda71258f782aedf02827652a04999beaacebb15b67e816dc1296c7e3713f2fdc70c931dfb301c60665013ca9be30b0e5fb176a3ff1d849ac7a8b6253438cbe1ced0f3692f1682f76a5ad4ed4d238ae3b175b45ede7da77c39a6202f3d7d3015eb2a0a9ae3e94360acc2b07fcf416199b8f9179ace1f51d58a9ba3f480ffdb3b59bd58c06a0f000dffd916e7a73f0bb1ae1bbf99a7025cfb14337434c156bfe2100ba121060fbd763e7dbf3bb5c3e34745296fe46375b9a4cbe9620735e51995f0471ed581cc71c03fdfa4ff074a72469c9f006059dd2bb007a0e68c525b7893fca1939fee2c6c88b3debc2b4f30b42827bc22f95455e4d4f3ee83a23e28af2be9576cd47f518309e7f95040c0d50745dc1cd05a41e7acc93ff2b2e7a2b8d9e9446b4c2220491e620dee1fe649986af8a40725583f0cf370a52a1587a4560c953a914b714684845fd54fdce4f4d6db71592d4b2a5bb4cb945293af8fc03aa73e1c726f4b50aefe86f0586546ab6b97c64ba3696bfe7d0b0bf3bba71d3af5e74c6407f2c64bea88f81ec2284a8dcefd2bb69837124a3bb4531c252de26527d95d1a02c18b5b69c40b151864c3bf0eab52c12962efcaf9605a02d2c05a9ab9f4f9953d0d20762b3a0b1c31ff824c9865c87832b0b1049f7266d7e62e66edd4f30466181ffc85b5f4a78539a2881db8fa45c49ac2e90d085cea507c623f61fa3404df370425caf13710e0e052e3b1ec4da0c73facebadd863bbfe4a0881188b5fc37642612b59f2ec59de2449fa52735d346c8d299514121d479c5ddc077dba94d52f82b08c6ad7960c67fdad991126ffa74d77c7609c2e6c22b1ed598b9d8db8fb06f0fe95c0569a35dd2d4fec77155fe8a1e5e36e5925fb588bda2fae3c06865f1699538e31886c2245ef87430e1e36f323950ef14acb5736b241341a84f6965002f24052e8e108f8fde306047547533586be9750a7a4ba56e2233e1ecc1f514ccddc84c3275dd39d4920c09758106e375f4850d</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">input password to look article</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/articles/1d16233a/" rel="prev" title="CVE-2022-28346">
+      <i class="fa fa-chevron-left"></i> CVE-2022-28346
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/articles/d76e8bcb/" rel="next" title="Yakit">
+      Yakit <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KeNan"
+      src="/images/1.jpeg">
+  <p class="site-author-name" itemprop="name">KeNan</p>
+  <div class="site-description" itemprop="description">A Blog to record some tips and opearations</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">KeNan</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>-->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
